@@ -8,12 +8,14 @@ using System.Net.Http.Headers;
 using System.Collections;
 using System.Net;
 using System.IO;
-using Newtonsoft.Json;
-using RestSharp;
 using System.Web.Script.Serialization;
 using System.Runtime.Serialization;
 using System.Xml.Linq;
-namespace Shopping
+
+using Newtonsoft.Json;
+using RestSharp;
+
+namespace AlignShopping
 {
 
     
@@ -34,13 +36,11 @@ namespace Shopping
      public  string status { get; set; }
      public string error { get; set; }
      public string total_count { get; set; }
-     public ProductRecord record;
-       
+     public ProductRecord record;       
    }
     #region Product Class Inherting Token System Class
-    public class CartAPI
+    public class AlignAPI
     {
-
         //grant_type string Required. Default value for merchant is client_credentials 
         //client_id string Required. The client ID you received from Align Commerce when you registered. 
         //client_secret string Required. The client secret you received from Align Commerce when you registered. 
@@ -86,18 +86,15 @@ namespace Shopping
         #endregion
 
         #region Access Token Genreation Method
+
         //Method For Getting Access Token
         public string GetAccessToken()
         {
-
-        
                 string url = "https://api.aligncommerce.com/oauth/access_token";
                 var client = new RestSharp.RestClient();
                 client.BaseUrl = url;
                 client.Authenticator = new HttpBasicAuthenticator(user, pass);
                 var request = new RestSharp.RestRequest();
-                //request.Method = Method.POST;
-                //  request.Resource = json;
                 request.AddParameter("grant_type", this.credentials);
                 request.AddParameter("client_id", this.client_id);
                 request.AddParameter("client_secret", this.client_secret);
@@ -121,16 +118,13 @@ namespace Shopping
                     this.Message = dic["error_message"];
                     return Message;
                 }
-
                 else
                 {
                     var js = new JavaScriptSerializer();
                     var dic = js.Deserialize<Dictionary<string, string>>(response.Content);
                     this.Message = dic["access_token"];
                     return Message;
-                }
-                
-
+                }   
         }
         #endregion
 
@@ -174,7 +168,6 @@ namespace Shopping
                 {
                     return response.Content;
                 }
-               
             }
             catch (Exception e)
             {
@@ -224,7 +217,13 @@ namespace Shopping
                     return Message;
                 }
 
-                else if (response.StatusCode.ToString() == "400" || response.StatusCode.ToString() == "401" || response.StatusCode.ToString() == "402" || response.StatusCode.ToString() == "403" || response.StatusCode.ToString() == "404" || response.StatusCode.ToString() == "500" || response.StatusCode.ToString() == "500")
+                else if (response.StatusCode.ToString() == "400" || 
+                            response.StatusCode.ToString() == "401" || 
+                            response.StatusCode.ToString() == "402" || 
+                            response.StatusCode.ToString() == "403" || 
+                            response.StatusCode.ToString() == "404" || 
+                            response.StatusCode.ToString() == "500" || 
+                            response.StatusCode.ToString() == "502")
                 {
                     var js = new JavaScriptSerializer();
                     var dic = js.Deserialize<Dictionary<string, string>>(response.Content);
@@ -245,9 +244,14 @@ namespace Shopping
         }
         #endregion
         #region Update Product
-        public string UpdateProduct(string access_token,string updateid, string product_name, string product_discription, double product_price, double product_shipping, string product_sku)
-        {
-        
+        public string UpdateProduct(string access_token
+                                    , string updateid
+                                    , string product_name
+                                    , string product_discription
+                                    , double product_price
+                                    , double product_shipping
+                                    , string product_sku)
+        {        
            this.access_token = access_token;
            this.product_name = product_name;
            this.product_sku = product_sku;
@@ -256,9 +260,8 @@ namespace Shopping
            this.product_description = product_discription;
            this.ID = updateid;
         
-        try
+            try
             {
-
                 string url = "https://api.aligncommerce.com/products/id";
                 var client = new RestSharp.RestClient();
                 client.BaseUrl = url;
@@ -281,7 +284,6 @@ namespace Shopping
                     this.Message = dic["message"];
                     return Message;
                 }
-
                 else if (response.StatusCode.ToString() == "400" || response.StatusCode.ToString() == "401" || response.StatusCode.ToString() == "402" || response.StatusCode.ToString() == "403" || response.StatusCode.ToString() == "404" || response.StatusCode.ToString() == "500" || response.StatusCode.ToString() == "500")
                 {
                     var js = new JavaScriptSerializer();
@@ -289,7 +291,6 @@ namespace Shopping
                     this.Message = dic["error_message"];
                     return Message;
                 }
-
                 else
                 {
                     var js = new JavaScriptSerializer();
@@ -309,10 +310,8 @@ namespace Shopping
         public string GetInvoieALL(string token)
         {
             this.access_token = token;
-
             try
             {
-
                 string url = "https://api.aligncommerce.com/invoice/";
                 var client = new RestSharp.RestClient();
                 client.BaseUrl = url;
@@ -326,7 +325,6 @@ namespace Shopping
                 {
                     return response.Content;
                 }
-
                 else if (response.StatusCode.ToString() == "400" || response.StatusCode.ToString() == "401" || response.StatusCode.ToString() == "402" || response.StatusCode.ToString() == "403" || response.StatusCode.ToString() == "404" || response.StatusCode.ToString() == "500" || response.StatusCode.ToString() == "500")
                 {
                     var js = new JavaScriptSerializer();
@@ -334,7 +332,6 @@ namespace Shopping
                     this.Message = dic["error_message"];
                     return Message;
                 }
-
                 else
                 {
                     return response.Content;
@@ -346,6 +343,7 @@ namespace Shopping
             }
         }
         #endregion
+
         //for Invoice
         #region List Specific Invoice
         public string ListSpecificInvoice(string token, string id)
@@ -354,7 +352,6 @@ namespace Shopping
             this.ID = id;
             try
             {
-
                 string url = "https://api.aligncommerce.com/invoice/retrieve/id";
                 var client = new RestSharp.RestClient();
                 client.BaseUrl = url;
@@ -372,7 +369,6 @@ namespace Shopping
                     this.Message = dic["message"];
                     return Message;
                 }
-
                 else if (response.StatusCode.ToString() == "400" || response.StatusCode.ToString() == "401" || response.StatusCode.ToString() == "402" || response.StatusCode.ToString() == "403" || response.StatusCode.ToString() == "404" || response.StatusCode.ToString() == "500" || response.StatusCode.ToString() == "500")
                 {
                     var js = new JavaScriptSerializer();
@@ -380,7 +376,6 @@ namespace Shopping
                     this.Message = dic["error_message"];
                     return Message;
                 }
-
                 else
                 {
                     var js = new JavaScriptSerializer();
@@ -410,29 +405,6 @@ namespace Shopping
             this.last_name = lastname;
             this.address1 = address1;
             this.address2 = address2;
-                            /*
-                            <?xml version="1.0" encoding="UTF-8" ?>
-	                <checkout_type>btc</checkout_type>
-	                <products>
-		                <product_name>Nike KD 6 Elite</product_name>
-		                <product_price>12</product_price>
-		                <quantity>1</quantity>
-		                <product_shipping>5</product_shipping>
-	                </products>
-	                <products>
-		                <product_name>Nike HyperRev</product_name>
-		                <product_price>7500</product_price>
-		                <quantity>8</quantity>
-		                <product_shipping>800</product_shipping>
-	                </products>
-	                <buyer_info>
-		                <first_name>Raphael</first_name>
-		                <last_name>Torres</last_name>
-		                <email>raphaeljtorres@gmail.com</email>
-		                <address_1>Makati</address_1>
-		                <address_2>City</address_2>
-	                </buyer_info>
-                             */
 
             XElement tk = new XElement("access_token", this.access_token);
             XElement checkoutty = new XElement("checkout_type", this.checkout_type);
@@ -470,17 +442,11 @@ namespace Shopping
                 {
                    return response.Content;
                 }
-
-
                 else
                 {
                     return response.Content;
-                }
-            
-            
+                }   
         }
-
-        
 
         #endregion
 
@@ -491,7 +457,6 @@ namespace Shopping
 
             try
             {
-
                 string url = "https://api.aligncommerce.com/buyer";
                 var client = new RestSharp.RestClient();
                 client.BaseUrl = url;
@@ -505,8 +470,6 @@ namespace Shopping
                 {
                    return response.Content;
                 }
-
-
                 else
                 {
                     return response.Content;
@@ -526,7 +489,6 @@ namespace Shopping
             this.ID = id;
             try
             {
-
                 string url = "https://api.aligncommerce.com/invoice/retrieve/id";
                 var client = new RestSharp.RestClient();
                 client.BaseUrl = url;

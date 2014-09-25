@@ -7,8 +7,8 @@
     <ProjectGuid>{6540F002-9F79-4A23-810D-9A4AC08B1C86}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Shopping</RootNamespace>
-    <AssemblyName>Shopping</AssemblyName>
+    <RootNamespace>AlignShopping</RootNamespace>
+    <AssemblyName>AlignShopping</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
