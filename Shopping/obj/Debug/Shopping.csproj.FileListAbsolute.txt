@@ -1,0 +1,10 @@
+C:\_Conrad\files\Shopping3\Shopping\Shopping\bin\Debug\Shopping.dll
+C:\_Conrad\files\Shopping3\Shopping\Shopping\bin\Debug\Shopping.pdb
+C:\_Conrad\files\Shopping3\Shopping\Shopping\bin\Debug\RestSharp.dll
+C:\_Conrad\files\Shopping3\Shopping\Shopping\bin\Debug\System.Net.Http.Formatting.dll
+C:\_Conrad\files\Shopping3\Shopping\Shopping\bin\Debug\Newtonsoft.Json.pdb
+C:\_Conrad\files\Shopping3\Shopping\Shopping\bin\Debug\Newtonsoft.Json.xml
+C:\_Conrad\files\Shopping3\Shopping\Shopping\bin\Debug\RestSharp.xml
+C:\_Conrad\files\Shopping3\Shopping\Shopping\bin\Debug\System.Net.Http.Formatting.xml
+C:\_Conrad\files\Shopping3\Shopping\Shopping\obj\Debug\Shopping.dll
+C:\_Conrad\files\Shopping3\Shopping\Shopping\obj\Debug\Shopping.pdb
